@@ -17,8 +17,10 @@ jobs:
         with:
           node-version: '24'
           cache: 'npm'
+          cache-dependency-path: 'client/package-lock.json'
 
       - name: Install dependencies
+        working-directory: ./client
         run: npm install --frozen-lockfile
 
       - name: Build project

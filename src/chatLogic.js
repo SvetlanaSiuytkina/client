@@ -2,7 +2,7 @@ import { renderUserList, addMessage } from './renderer.js';
 
 let currentUser = null;
 let ws;
-const wsUrl = 'ws://localhost:3000';
+const wsUrl = 'ws://helpful-wisdom-production-4cea.up.railway.app';
 
 export const handleRegistration = async (elements) => {
   const name = elements.nicknameInput.value.trim();
@@ -16,7 +16,8 @@ export const handleRegistration = async (elements) => {
   elements.registerBtn.disabled = true;
 
   try {
-    const response = await fetch('/new-user', {
+    const apiUrl = 'https://helpful-wisdom-production-4cea.up.railway.app';
+    const response = await fetch(`${apiUrl}/new-user`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({name})

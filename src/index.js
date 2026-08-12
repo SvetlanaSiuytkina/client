@@ -1,4 +1,5 @@
 import { handleRegistration, sendMessage } from './chatLogic.js';
+import './style.css'
 
 document.addEventListener('DOMContentLoaded', () => {
   const elements = {

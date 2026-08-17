@@ -22,7 +22,7 @@ export const renderUserList = (users) => {
 
 //доб сообщ
 export const addMessage = (author, text, type) => {
-  const messagesContainer = document.getElementById('messagesContainer');
+  const messagesContainer = document.getElementById('messages-container');
   if (!messagesContainer) return;
 
   const msgDiv = document.createElement('div');

@@ -1,4 +1,4 @@
-[![Deploy to GitHub Pages](https://github.com/SvetlanaSiuytkina/client/actions/workflows/deploy-gh-pages.yml/badge.svg)](https://github.com/SvetlanaSiuytkina/client/actions/workflows/deploy-gh-pages.yml)
+[![pages-build-deployment](https://github.com/SvetlanaSiuytkina/client/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/SvetlanaSiuytkina/client/actions/workflows/pages/pages-build-deployment)
 
 ## CLIENT
 Корпоративный чат с использованием WebSockets

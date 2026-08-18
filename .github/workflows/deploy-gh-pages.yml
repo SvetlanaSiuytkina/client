@@ -26,3 +26,12 @@ jobs:
 
       - name: Verify dist folder exists
         run: ls -la ./dist || (echo "ERROR dist folder not found!" && exit 1)
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'

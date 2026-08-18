@@ -25,4 +25,4 @@ jobs:
         run: npm run build
 
       - name: Verify dist folder exists
-        run: ls -la ./dist || (echo "ERROR: dist folder not found!" && exit 1)
+        run: ls -la ./dist || (echo "ERROR dist folder not found!" && exit 1)

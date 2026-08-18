@@ -2,7 +2,29 @@ import { renderUserList, addMessage } from './renderer.js';
 
 let currentUser = null;
 let ws;
-const wsUrl = 'ws://helpful-wisdom-production-4cea.up.railway.app';
+const wsUrl = 'wss://helpful-wisdom-production-4cea.up.railway.app';
+
+export const initWebSocket = () => {
+  if (ws) return;
+
+  ws = new WebSocket(wsUrl);
+  ws.onopen = () => console.log('WebSocket соединение установлено');
+  ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+
+    if (Array.isArray(data)) {
+      renderUserList(data);
+      return;
+    }
+
+    if (data.type === 'send') {
+      handleIncomingMessage(data);
+    }
+  }
+  
+  ws.onclose = () => console.log('WebSocket соединение закрыто');
+  ws.onerror = (error) => console.error('WebSocket ошибка:', error);
+}
 
 export const handleRegistration = async (elements) => {
   const name = elements.nicknameInput.value.trim();
@@ -17,6 +39,7 @@ export const handleRegistration = async (elements) => {
 
   try {
     const apiUrl = 'https://helpful-wisdom-production-4cea.up.railway.app';
+    
     const response = await fetch(`${apiUrl}/new-user`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -37,7 +60,7 @@ export const handleRegistration = async (elements) => {
       const emptyState = document.querySelector('.empty-state');
       if (emptyState) emptyState.remove();
 
-      initWebSocket(elements);
+      initWebSocket();
     } else {
       elements.errorMsg.textContent = result.message || 'Этот никнейм уже занят';
       elements.registerBtn.disabled = false;
@@ -49,29 +72,7 @@ export const handleRegistration = async (elements) => {
   }
 }
 
-function initWebSocket(elements) {
-  ws = new WebSocket(wsUrl);
-  ws.onopen = () => console.log('WebSocket соединение установлено');
-
-  ws.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-
-    if (Array.isArray(data)) {
-      renderUserList(data);
-      return;
-    }
-
-    if (data.type === 'send') {
-      handleIncomingMessage(data, elements);
-    }
-  }
-  
-  ws.onclose = () => console.log('WebSocket соединение закрыто');
-
-  ws.onerror = (error) => console.error('WebSocket ошибка:', error);
-}
-
-function handleIncomingMessage(data, elements) {
+function handleIncomingMessage(data) {
   if (currentUser && data.user.id === currentUser.id) {
     return;
   }
